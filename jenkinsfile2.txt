@@ -1,0 +1,17 @@
+node('build_java_11) {
+   stage('Sourcecode') {
+     git branch: 'scripted' , url: 'https://github.com/chPooja0917/spring-petclinic.git'
+}
+
+
+stage('Build the code') {
+sh 'mvn clean package'
+
+}
+
+stage('Archiving and Test Results') {
+	junit '**/surefire-reports/*.xml'
+	archiveArtifacts artfacts: '**/*.jar, followSymlinks: false
+}
+
+}
