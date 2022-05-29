@@ -1,23 +1,22 @@
 pipeline {
-    agent { label 'build_java_11 }
-    triggers { pollSCM('H * * * *) }
-    stages { 
+    agent { label 'build_java_11' }
+    triggers { pollSCM('* * * * *') }
+    stages {
         stage('SourceCode') {
-	    steps {
-		git branch: 'declarative' , url 'https://github.com/chPooja0917/spring-petclinic.git'
+            steps {
+                git branch: 'declarative', url: 'https://github.com/chPooja0917/spring-petclinic.git'
             }
-
         }
-       stage('Build') {
-	   steps {
-  		sh 'mvn clean package'
-           }
-	 }
-       stage('Archive and Test Results') {
-       steps {
-          junit '**/surefire-reports/*.xml
-	  archiveArtifacts artifacts: '**/*jar', followSymlinks: false
-		}
-	   }
-      }
+        stage('Build') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+        stage('Archive and Test Results') {
+            steps {
+               junit '**/surefire-reports/*.xml'
+               archiveArtifacts artifacts: '**/*.jar', followSymlinks: false
+            }
+        }
+    }
 }
