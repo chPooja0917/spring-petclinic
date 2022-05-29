@@ -1,17 +1,16 @@
-node('build_java_11) {
-   stage('Sourcecode') {
-     git branch: 'scripted' , url: 'https://github.com/chPooja0917/spring-petclinic.git'
-}
+node('build_java_11') {
+    stage('SourceCode') {
+        // get the code from git repo on the branch sprint1_develop
+        git branch: 'scripted', url: 'https://github.com/chPooja0917/spring-petclinic.git'
+    }
 
+    stage('Build the code') {
+        sh 'mvn clean package'
+    }
 
-stage('Build the code') {
-sh 'mvn clean package'
-
-}
-
-stage('Archiving and Test Results') {
-	junit '**/surefire-reports/*.xml'
-	archiveArtifacts artfacts: '**/*.jar, followSymlinks: false
-}
+    stage('Archiving and Test Results') {
+        junit '**/surefire-reports/*.xml'
+        archiveArtifacts artifacts: '**/*.jar', followSymlinks: false
+    }
 
 }
