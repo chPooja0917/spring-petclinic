@@ -14,7 +14,7 @@ pipeline {
         }
         stage('Build and sonar anylisys') {
             steps{
-                withSonarQubeEnv('My SonarQube Server') {
+                withSonarQubeEnv('SONAR_LATEST') {
                 sh 'mvn clean package sonar:sonar'
                 }
             }
