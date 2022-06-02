@@ -12,6 +12,14 @@ pipeline {
                 sh 'mvn clean package'
             }
         }
+        stage('Build and sonar anylisys') {
+            steps{
+                withSonarQubeEnv('My SonarQube Server') {
+                sh 'mvn clean package sonar:sonar'
+                }
+            }
+
+        }
         stage('Archive and Test Results') {
             steps {
                junit '**/surefire-reports/*.xml'
